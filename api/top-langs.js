@@ -91,7 +91,7 @@ export default async (req, res) => {
     );
 
     return res.send(
-      renderTopLanguages(filteredLangObj, {
+      renderTopLanguages(filteredLangsObj, {
         custom_title,
         hide_title: parseBoolean(hide_title),
         hide_border: parseBoolean(hide_border),
