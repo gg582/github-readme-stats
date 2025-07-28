@@ -68,6 +68,8 @@ export default async (req, res) => {
       size_weight,
       count_weight,
     );
+    const excludedLangs = ["CSS", "HTML"];
+    topLangs = topLangs.filter(lang => !excludedLangs.includes(lang.name));
 
     let cacheSeconds = parseInt(
       cache_seconds || CONSTANTS.TOP_LANGS_CACHE_SECONDS,
