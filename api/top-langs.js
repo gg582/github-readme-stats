@@ -68,8 +68,14 @@ export default async (req, res) => {
       size_weight,
       count_weight,
     );
-    const excludedLangs = ["CSS", "HTML"];
-    topLangs = topLangs.filter(lang => !excludedLangs.includes(lang.name));
+    const filteredLangs = Object.values(topLangs).filter(
+      (lang) => lang.name !== "CSS" && lang.name !== "HTML"
+    );
+
+    const filteredLangsObj = filteredLangs.reduce((acc, lang) => {
+      acc[lang.name] = lang;
+      return acc;
+    }, {});
 
     let cacheSeconds = parseInt(
       cache_seconds || CONSTANTS.TOP_LANGS_CACHE_SECONDS,
@@ -85,7 +91,7 @@ export default async (req, res) => {
     );
 
     return res.send(
-      renderTopLanguages(topLangs, {
+      renderTopLanguages(filteredLangObj, {
         custom_title,
         hide_title: parseBoolean(hide_title),
         hide_border: parseBoolean(hide_border),
